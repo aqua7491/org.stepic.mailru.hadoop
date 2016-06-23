@@ -17,6 +17,16 @@ def pack_struct(_list):
 
 
 def task():
+    """
+    Algorithm
+    ~~~
+    class Mapper
+      method Map(key, value)
+        Emit(key, value)
+        for all m in value.AdjacencyList do
+          Emit(m, value.d + 1)
+    ~~~
+    """
     for line in iterator():
         print(line)
         (nid, weight, _list_raw) = line.split('\t')

@@ -31,21 +31,26 @@ def w(_from, _to, value=None):
 
 
 def dijkstra():
-    # Dijkstra(V, s, w)
-    #
-    #   V - множество вершин
-    #   s - вершина входа
-    #   w - множество весов
-    #
-    #   for all vertex v in V do
-    #     d[v] <- Inf
-    #   d[s] <- 0
-    #   Q <- {V}
-    #   while Q != empty do
-    #     u <- ExtractMin(Q)
-    #     for all vertex v in u.AdjacencyList do
-    #       if d[v] > d[u] + w(u, v) then
-    #         d[v] <- d[u] + w(u, v)
+    """
+    Algorithm
+    ~~~
+    Dijkstra(V, s, w)
+
+      V - множество вершин
+      s - вершина входа
+      w - множество весов
+
+      for all vertex v in V do
+        d[v] <- Inf
+      d[s] <- 0
+      Q <- {V}
+      while Q != empty do
+        u <- ExtractMin(Q)
+        for all vertex v in u.AdjacencyList do
+          if d[v] > d[u] + w(u, v) then
+            d[v] <- d[u] + w(u, v)
+    ~~~
+    """
     (nodes, edges) = (None, None)
     (_from, _to) = (None, None)
     V = {}
