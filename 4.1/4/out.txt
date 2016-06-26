@@ -1,3 +1,9 @@
-www.facebook.com	100;1
-www.google.com	30;3
-stepic.org	160;2
+nihil	1
+aut	2
+Caesar	1
+aut	2
+nihil	1
+aut	2
+de	1
+bene	1
+mortuis	1

@@ -10,11 +10,8 @@ def iterator():
 
 def task():
     for line in iterator():
-        _buffer = {}
         for word in line.split(' '):
-            _buffer[word] = _buffer[word] + 1 if word in _buffer else 1
-        for word, count in _buffer.items():
-            print(word + '\t' + str(count))
+            print(word.strip() + '\t1')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,5 @@
+# Напишите программу, которая реализует mapper для задачи WordCount в Hadoop Streaming.
+
+Vivere est cogitare
+Vivere militate est
+Scientia potentia est
