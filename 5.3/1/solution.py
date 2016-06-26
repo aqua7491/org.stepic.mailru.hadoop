@@ -16,7 +16,7 @@ def pack_struct(_list):
     return '{%s}' % ','.join(_list)
 
 
-def page_rank_map():
+def task():
     for line in iterator():
         (n, p, _struct) = line.split('\t')
         _list = unpack_struct(_struct)
@@ -27,4 +27,4 @@ def page_rank_map():
 
 
 if __name__ == '__main__':
-    page_rank_map()
+    task()

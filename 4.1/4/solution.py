@@ -9,19 +9,19 @@ def iterator():
 
 
 def task():
-    (site, count, sum) = (None, 0, 0)
+    (site, count, _sum) = (None, 0, 0)
 
     def _print():
-        print(site + '\t' + str(sum) + ';' + str(count))
+        print(site + '\t' + str(_sum) + ';' + str(count))
 
     for line in iterator():
         (_site, pair) = line.split('\t')
         (time, _count) = pair.split(';')
         if site and site != _site:
             _print()
-            (site, count, sum) = (_site, int(_count), int(time))
+            (site, count, _sum) = (_site, int(_count), int(time))
         else:
-            (site, count, sum) = (_site, count + int(_count), sum + int(time))
+            (site, count, _sum) = (_site, count + int(_count), _sum + int(time))
     if site:
         _print()
 
