@@ -1,3 +1,4 @@
+from queue import PriorityQueue
 import sys
 
 
@@ -8,60 +9,81 @@ def iterator():
             yield line
 
 
-def unpack_struct(_struct):
-    return list(filter(lambda x: bool(x), _struct.strip('{}').split(',')))
+def storage():
+    def decorate(func):
+        func.storage = {}
+        return func
+    return decorate
 
 
-def pack_struct(_list):
-    return '{%s}' % ','.join(_list)
-
-
-def is_node(_list):
-    return len(_list) > 0
+@storage()
+def w(_from, _to, value=None):
+    if value is not None:
+        if _from not in w.storage:
+            w.storage[_from] = {}
+        w.storage[_from][_to] = value
+    elif _from == _to:
+        return 0
+    elif _from in w.storage and _to in w.storage[_from]:
+        return w.storage[_from][_to]
+    else:
+        return float('inf')
 
 
 def task():
     """
     Algorithm
     ~~~
-    class Reducer
-      method Reduce(nid m, [d1, ..., dk])
-        dmin <- INF
-        M <- empty
-        for all d in counts [d1, ..., dk] do
-          if IsNode(d) then
-            M <- d
-          else if d < dmin then
-            dmin <- d
-        M.Distance <- dmin
-        Emit(nid m, node M)
+    Dijkstra(V, s, w)
+
+      V - множество вершин
+      s - вершина входа
+      w - множество весов
+
+      for all vertex v in V do
+        d[v] <- Inf
+      d[s] <- 0
+      Q <- {V}
+      while Q != empty do
+        u <- ExtractMin(Q)
+        for all vertex v in u.AdjacencyList do
+          if d[v] > d[u] + w(u, v) then
+            d[v] <- d[u] + w(u, v)
     ~~~
     """
-    cur_nid, cur_list, dmin = None, [], float('inf')
-    def _print():
-        _dmin = str(int(dmin)) if dmin < float('inf') else 'INF'
-        print('%s\t%s\t%s' % (cur_nid, _dmin, pack_struct(cur_list)))
+    (nodes, edges) = (None, None)
+    (_from, _to) = (None, None)
+    V = {}
+
     for line in iterator():
-        (nid, weight, _struct) = line.split('\t')
-        _list = unpack_struct(_struct)
-        if not cur_nid:
-            cur_nid = nid
+        elems = line.split()
+        if len(elems) == 2:
+            if not nodes:
+                (nodes, edges) = elems
+            else:
+                (_from, _to) = elems
+        elif len(elems) == 3:
+            if elems[0] not in V:
+                V[elems[0]] = set()
+            if elems[1] not in V:
+                V[elems[1]] = set()
+            V[elems[0]].add(elems[1])
+            w(elems[0], elems[1], int(elems[2]))
 
-        if nid != cur_nid:
-            _print()
-            cur_nid = nid
-            cur_list = []
-            dmin = float('inf')
+    d = {}
+    Q = PriorityQueue()
+    for v in V.keys():
+        d[v] = w(_from, v)
+        Q.put((d[v], v))
 
-        if is_node(_list):
-            cur_list = _list
-            dmin = dmin if dmin < float(weight) else float(weight)
-        elif float(weight) < dmin:
-            dmin = float(weight)
+    while not Q.empty():
+        (priority, u) = Q.get()
+        for v in V[u]:
+            if v in d and u in d and d[v] > d[u] + w(u, v):
+                d[v] = d[u] + w(u, v)
+                Q.put((d[v], v))
 
-    if cur_nid:
-        _print()
-
+    print(d[_to] if _to in d and d[_to] < float('inf') else -1)
 
 if __name__ == '__main__':
     task()
