@@ -9,28 +9,23 @@ def iterator():
 
 
 def task():
-    (cur, urls, queries) = (None, [], [])
+    (key, cur, cap) = (None, None, 0)
     for line in iterator():
-        (user_id, action) = line.strip().split('\t')
-        (_type, val) = action.split(':')
+        (_key, val) = line.strip().split('\t')
         if cur is None:
-            cur = user_id
-        if cur != user_id:
-            if len(urls) and len(queries):
-                for query in queries:
-                    for url in urls:
-                        print('%s\t%s\t%s' % (cur, query, url))
-            urls = []
-            queries = []
-        cur = user_id
-        if _type == 'url':
-            urls.append(val)
+            cur = _key
+
+        if key and cur != _key:
+            if cap < 2:
+                print(key)
+            cur = _key
+            cap = 1
         else:
-            queries.append(val)
-    if len(urls) and len(queries):
-        for query in queries:
-            for url in urls:
-                print('%s\t%s\t%s' % (cur, query, url))
+            cap += 1
+
+        key = _key
+    if key and cap < 2:
+        print(key)
 
 
 if __name__ == '__main__':

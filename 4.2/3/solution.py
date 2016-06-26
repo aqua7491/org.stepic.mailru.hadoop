@@ -8,16 +8,18 @@ def iterator():
             yield line
 
 
-def task():
-    current = None
+def task(column):
+    _map = {
+        'id': 0,
+        'user_id': 1,
+        'url': 2,
+    }
+    if column not in _map:
+        raise Exception()
     for line in iterator():
-        (val, key) = line.strip().split('\t')
-        if current and current != val:
-            print(current)
-        current = val
-    if current:
-        print(current)
+        cols = line.split('\t')
+        print(cols[_map[column]])
 
 
 if __name__ == '__main__':
-    task()
+    task('url')
