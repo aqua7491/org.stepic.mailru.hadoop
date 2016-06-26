@@ -30,7 +30,7 @@ def w(_from, _to, value=None):
         return float('inf')
 
 
-def dijkstra():
+def task():
     """
     Algorithm
     ~~~
@@ -86,4 +86,4 @@ def dijkstra():
     print(d[_to] if _to in d and d[_to] < float('inf') else -1)
 
 if __name__ == '__main__':
-    dijkstra()
+    task()

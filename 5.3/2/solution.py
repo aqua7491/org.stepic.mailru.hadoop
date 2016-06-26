@@ -20,7 +20,7 @@ def is_node(_list):
     return len(_list) > 0
 
 
-def page_rank_reduce():
+def task():
     (current_node, current_struct, page_rank) = (None, [], 0.0)
 
     def _print():
@@ -51,4 +51,4 @@ def page_rank_reduce():
 
 
 if __name__ == '__main__':
-    page_rank_reduce()
+    task()
